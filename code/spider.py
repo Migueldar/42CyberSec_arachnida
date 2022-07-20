@@ -3,12 +3,13 @@ from bs4 import BeautifulSoup as bs
 import argparse
 import threading
 import atexit
-#think about multiThreading req
+#think about multiThreading in each call to download_images
+#handle 429 exception
 
 already_visited=set()
+already_downloaded=set()
 number_images=0
 number_pages=0
-already_downloaded=set()
 
 def exit_print():
 	print("Images: " + str(number_images))
@@ -36,12 +37,13 @@ def url_converter(base_url, url):
 
 #handle -o flag
 #handle xlink:href
-def find_links(beautiful, depth, url):
+def recursive_main(beautiful, depth, url):
 	global number_pages
 	number_pages += 1
 	print(depth)
 	already_visited.add(url)
-	download_images(url, beautiful)
+	threading.Thread(target=download_images(url, beautiful))
+	print("hola")
 	if (depth < level):
 		links = beautiful.find_all('a')
 		for link in links:
@@ -61,7 +63,7 @@ def find_links(beautiful, depth, url):
 					else: 
 						if (re.status_code == 200):
 							soup = bs(re.content, "lxml")
-							find_links(soup, depth + 1, real_link)
+							recursive_main(soup, depth + 1, real_link)
 
 def valid_image(url):
 	return url.endswith(".jpg") or url.endswith(".jpeg") or url.endswith(".png") or url.endswith(".gif") or url.endswith(".bpm") 
@@ -88,6 +90,8 @@ def download_images(url, beautiful):
 						pass
 					else:
 						if (image.status_code == 200):
+							if len(src) > 255:
+								src = src[-255:-1] + src[-1]
 							try:
 								with open(path + '/' + src.replace('/','|'), "wb") as file:
 									file.write(image.content)
@@ -110,4 +114,4 @@ if __name__  == "__main__":
 	out = dict.get('o')
 	r = req.get(url)
 	beautiful = bs(r.content, "lxml")
-	find_links(beautiful, 0, url)
+	recursive_main(beautiful, 0, url)
