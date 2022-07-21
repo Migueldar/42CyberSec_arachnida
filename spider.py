@@ -105,7 +105,9 @@ if __name__  == "__main__":
 	cant_exit_url = ""
 	url = dict.get('URL')
 	recursive = dict.get('r')
-	level = int(dict.get('l')) 
+	level = int(dict.get('l'))
+	if not recursive:
+		level = 0 
 	if recursive and level == 0:
 		level = 1 
 	path = dict.get('p')
