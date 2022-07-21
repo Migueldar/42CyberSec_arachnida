@@ -15,7 +15,7 @@ def parse():
 
 if __name__ == "__main__":
 	dict = parse()
-	remove = dict.get('r')
+	remove = dict.get('remove')
 	image_path_list = list()
 	image_path_list.append(dict.get('IMAGE1'))
 	image_path_list += dict.get('IMAGE2')
