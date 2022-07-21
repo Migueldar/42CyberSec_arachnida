@@ -4,7 +4,7 @@ import argparse
 
 def parse():
 	parser = argparse.ArgumentParser(
-		prog = './scorpion', 
+		prog = 'python3 scorpion.py', 
 		description = 'show image metadata'
 	)
 	parser.add_argument('IMAGE1')

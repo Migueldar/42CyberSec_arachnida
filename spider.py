@@ -14,7 +14,7 @@ def exit_print():
 
 def parse():
 	parser = argparse.ArgumentParser(
-		prog = './spider', 
+		prog = 'python3 spider.py', 
 		description = 'scrape images from URL'
 	)
 	parser.add_argument('URL', help='URL to scrape')
