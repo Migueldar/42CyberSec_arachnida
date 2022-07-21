@@ -1,4 +1,3 @@
-from socket import CAN_BCM_TX_EXPIRED
 import requests as req
 from bs4 import BeautifulSoup as bs
 import argparse
