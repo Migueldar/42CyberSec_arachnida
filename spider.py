@@ -96,7 +96,7 @@ def download_images(url, beautiful):
 								print("You ran out of memory!")
 								exit()
 							except Exception:
-								print("Couldnt download image from " + src)
+								print("Couldnt download image from " + src + " check if folder in which images will be downloaded (./data by default) exists")
 
 if __name__  == "__main__":
 	atexit.register(exit_print)
